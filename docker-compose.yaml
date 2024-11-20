@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0    # Specify the MySQL version
+    container_name: mysql_db
+    ports:
+      - "3306:3306"     # Map port 3306 on the host to port 3306 in the container
+    environment:
+      MYSQL_ROOT_PASSWORD: admin  # Set the root password
+      MYSQL_DATABASE: mydatabase         # Create a default database
+      MYSQL_USER: admin                   # Create a user
+      MYSQL_PASSWORD: user       # Set the user's password
+    volumes:
+      - ./db-init:/docker-entrypoint-initdb.d
+    networks:
+      - my_network
+
+volumes:
+  db_data:                               # Volume for database persistence
+
+networks:
+  my_network:
+    driver: bridge
